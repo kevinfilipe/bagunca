@@ -10,21 +10,8 @@ import {ListaPessoasComponent} from './lista-pessoas.component';
 })
 
 export class AppComponent {
-    public pessoas;
-
     constructor(
       private http: Http,
       private pessoaService: PessoaService
     ) { }
-
-    getPessoas() {
-      this.pessoaService.getPessoas().subscribe(
-        data => { this.pessoas = data },
-        err => { console.log(err) }
-      );
-    }
-
-    ngOnInit() {
-      this.getPessoas();
-    }
 }
