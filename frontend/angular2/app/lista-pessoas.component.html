@@ -3,6 +3,7 @@
   <li *ngFor="let pessoa of pessoas">
     <span>{{pessoa._id}}</span>
     <span>{{pessoa.nome}}</span>
+    <button (click)="removerPessoa(pessoa, $event)">Remover</button>
   </li>
 </ul>
 <adiciona-pessoa [pessoas]="pessoas" [errorMessage]="errorMessage"></adiciona-pessoa>

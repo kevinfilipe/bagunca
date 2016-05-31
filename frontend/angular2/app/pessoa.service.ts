@@ -20,5 +20,15 @@ export class PessoaService {
     return this.http.post(this.pessoasUrl, body, options)
                     .map((res: Response) => res.json());
   }
+
+  removerPessoa(pessoa) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let url = `${this.pessoasUrl}/${pessoa._id}`;
+
+    return this.http.delete(url, headers)
+                    .map((res: Response) => res.json());
+  }
 }
 

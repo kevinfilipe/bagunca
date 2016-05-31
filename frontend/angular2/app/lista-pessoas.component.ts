@@ -23,4 +23,13 @@ export class ListaPessoasComponent implements OnInit {
                         pessoas => this.pessoas      = pessoas,
                         error   => this.errorMessage = <any>error );
   }
+
+  removerPessoa(pessoa, event: any) {
+    event.stopPropagation();
+    
+    this.pessoaService.removerPessoa(pessoa)
+                      .subscribe(
+                        res    => { this.pessoas = this.pessoas.filter(p => p !== pessoa); },
+                        error  => this.errorMessage = <any>error );
+  }
 }
