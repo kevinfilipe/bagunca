@@ -1,10 +1,10 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {PessoaService} from './pessoa.service';
+import {PessoaService}                          from './pessoa.service';
 
 @Component({
-  selector: 'adiciona-pessoa',
+  selector:    'adiciona-pessoa',
   templateUrl: 'app/adiciona-pessoa.component.html',
-  styleUrls: ['app/adiciona-pessoa.component.css']
+  styleUrls:   ['app/adiciona-pessoa.component.css']
 })
 
 export class AdicionaPessoaComponent {  

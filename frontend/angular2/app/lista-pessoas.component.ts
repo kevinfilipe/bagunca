@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {PessoaService} from './pessoa.service';
+import {Component, OnInit}       from '@angular/core';
+import {PessoaService}           from './pessoa.service';
 import {AdicionaPessoaComponent} from './adiciona-pessoa.component';
 
 @Component({
-  selector: 'lista-pessoas',
+  selector:    'lista-pessoas',
   templateUrl: 'app/lista-pessoas.component.html',
-  styleUrls: ['app/lista-pessoas.component.css'],
-  directives: [AdicionaPessoaComponent]
+  styleUrls:   ['app/lista-pessoas.component.css'],
+  directives:  [AdicionaPessoaComponent]
 })
 
 export class ListaPessoasComponent implements OnInit {  
@@ -20,7 +20,7 @@ export class ListaPessoasComponent implements OnInit {
   obterPessoas() {
     this.pessoaService.getPessoas()
                       .subscribe(
-                       pessoas => this.pessoas = pessoas,
-                       error   => this.errorMessage = <any>error);
+                        pessoas => this.pessoas      = pessoas,
+                        error   => this.errorMessage = <any>error );
   }
 }

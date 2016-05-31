@@ -1,6 +1,5 @@
 import {Injectable}                              from '@angular/core';
 import {Headers, Http, RequestOptions, Response} from '@angular/http';
-import {Observable}                              from 'rxjs/Rx';
 import                                           'rxjs/add/operator/map';
  
 @Injectable()
@@ -14,7 +13,7 @@ export class PessoaService {
   } 
 
   adicionarPessoa(nome: string) {
-    let body = JSON.stringify({ nome });
+    let body    = JSON.stringify({ nome });
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
