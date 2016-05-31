@@ -5,5 +5,5 @@
     <span>{{pessoa.nome}}</span>
   </li>
 </ul>
-<adiciona-pessoa [pessoas]="pessoas" [errorMessage]="errorMessage" (novaPessoaSubmetida)="submeterNovaPessoa($event);"></adiciona-pessoa>
+<adiciona-pessoa [pessoas]="pessoas" [errorMessage]="errorMessage"></adiciona-pessoa>
 <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>

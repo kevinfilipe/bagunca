@@ -24,8 +24,4 @@ export class ListaPessoasComponent implements OnInit {
                        pessoas => this.pessoas = pessoas,
                        error   => this.errorMessage = <any>error);
   }
-
-  submeterNovaPessoa(event) {
-    console.log(event);
-  }
 }
