@@ -17,7 +17,7 @@ var router = express.Router();
 
 router.use(function(req, res, next) {
     console.log('Requisao \'' + req.method + '\' para o recurso \'' + req.originalUrl + '\' recebida...');
-
+    
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -66,7 +66,8 @@ router.route('/pessoas/:id')
             pessoa.save(function(err) {
                 if(err) res.send(err);
 
-                res.json({message: 'Pessoa atualizada com sucesso!'})
+                res.json(pessoa);
+                // res.json({message: 'Pessoa atualizada com sucesso!'})
             });
         });
     })
