@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/pessoas');
 
-var Pessoa = require('./app/models/pessoa')
+var Pessoa = require('./app/models/pessoa');
+var Animal = require('./app/models/pessoa');
 
 var express = require('express');
 var app = express();
@@ -29,6 +30,8 @@ router.get('/', function(req, res) {
     res.json({message: 'Bem vindo a nossa API!'});
 });
 
+// Rotas para o Schema Pessoa
+
 router.route('/pessoas')
     .post(function(req, res){
         var pessoa = new Pessoa();
@@ -38,7 +41,6 @@ router.route('/pessoas')
             if(err) res.send(err);
 
             res.json(pessoa);
-            // res.json({message: 'Pessoa criada com sucesso!'});
         });
     })
     .get(function(req, res) {
@@ -67,7 +69,6 @@ router.route('/pessoas/:id')
                 if(err) res.send(err);
 
                 res.json(pessoa);
-                // res.json({message: 'Pessoa atualizada com sucesso!'})
             });
         });
     })
@@ -77,9 +78,61 @@ router.route('/pessoas/:id')
         }, function(err, pessoa) {
             if(err) res.send(err);
 
-            res.json({message: 'Pessoa removida com sucesso!'});
+            res.json();
         });
     });
+
+// Rotas para o Schema Animal
+
+router.route('/animais')
+    .post(function(req, res){
+        var animal = new Animal();
+        animal.nome = req.body.nome;
+
+        animal.save(function(err) {
+            if(err) res.send(err);
+
+            res.json(animal);
+        });
+    })
+    .get(function(req, res) {
+        Animal.find(function(err, animais) {
+            if(err) res.send(err);
+
+            res.json(animais);
+        });
+    });
+
+router.route('/animais/:id')
+    .get(function(req, res) {
+        Animal.findById(req.params.id, function(err, animal) {
+            if(err) res.send(err);
+
+            res.json(animal);
+        });
+    })
+    .put(function(req, res) {
+        Animal.findById(req.params.id, function(err, animal) {
+            if(err) res.send(err);
+
+            animal.nome = req.body.nome;
+
+            animal.save(function(err) {
+                if(err) res.send(err);
+
+                res.json(animal);
+            });
+        });
+    })
+    .delete(function(req, res) {
+        Animal.remove({
+            _id: req.params.id
+        }, function(err, animal) {
+            if(err) res.send(err);
+
+            res.json();
+        });
+    });    
 
 app.use('/api', router);
 
