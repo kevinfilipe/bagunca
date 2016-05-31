@@ -3,13 +3,13 @@ import {PessoaService}           from './pessoa.service';
 import {AdicionaPessoaComponent} from './adiciona-pessoa.component';
 
 @Component({
-  selector:    'lista-pessoas',
-  templateUrl: 'app/lista-pessoas.component.html',
-  styleUrls:   ['app/lista-pessoas.component.css'],
+  selector:    'pessoas',
+  templateUrl: 'app/pessoas.component.html',
+  styleUrls:   ['app/pessoas.component.css'],
   directives:  [AdicionaPessoaComponent]
 })
 
-export class ListaPessoasComponent implements OnInit {  
+export class PessoasComponent implements OnInit {  
   public errorMessage;
   public pessoas;
 

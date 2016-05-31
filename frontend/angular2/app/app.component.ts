@@ -1,10 +1,10 @@
 import {Component}             from '@angular/core';
-import {ListaPessoasComponent} from './lista-pessoas.component';
+import {PessoasComponent} from './pessoas.component';
 
 @Component({
-  selector:   'my-app',
-  template:   '<lista-pessoas></lista-pessoas>',
-  directives: [ListaPessoasComponent]
+  selector:   'app',
+  template:   '<pessoas></pessoas>',
+  directives: [PessoasComponent]
 })
 
 export class AppComponent {}
