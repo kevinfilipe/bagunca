@@ -1,0 +1,6 @@
+Nova Pessoa:
+<input #nomeNovaPessoa placeholder="Nome" />
+<button (click)="adicionarPessoa(nomeNovaPessoa.value); nomeNovaPessoa.value=''">
+  Adicionar Pessoa
+</button>
+<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>

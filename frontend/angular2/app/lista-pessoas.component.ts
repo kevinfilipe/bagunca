@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {PessoaService} from './pessoa.service';
+import {AdicionaPessoaComponent} from './adiciona-pessoa.component';
 
 @Component({
   selector: 'lista-pessoas',
   templateUrl: 'app/lista-pessoas.component.html',
-  styleUrls: ['app/lista-pessoas.component.css']
+  styleUrls: ['app/lista-pessoas.component.css'],
+  directives: [AdicionaPessoaComponent]
 })
 
 export class ListaPessoasComponent implements OnInit {  
@@ -23,11 +25,7 @@ export class ListaPessoasComponent implements OnInit {
                        error   => this.errorMessage = <any>error);
   }
 
-  adicionarPessoa (nome: string) {
-    if (!nome) { return; }
-    this.pessoaService.adicionarPessoa(nome)
-                      .subscribe(
-                        pessoa  => this.pessoas.push(pessoa),
-                        error  => this.errorMessage = <any>error);
+  submeterNovaPessoa(event) {
+    console.log(event);
   }
 }

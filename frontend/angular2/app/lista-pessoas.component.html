@@ -5,9 +5,5 @@
     <span>{{pessoa.nome}}</span>
   </li>
 </ul>
-Nova Pessoa:
-<input #nomeNovaPessoa placeholder="Nome" />
-<button (click)="adicionarPessoa(nomeNovaPessoa.value); nomeNovaPessoa.value=''">
-  Adicionar Pessoa
-</button>
+<adiciona-pessoa [pessoas]="pessoas" [errorMessage]="errorMessage" (novaPessoaSubmetida)="submeterNovaPessoa($event);"></adiciona-pessoa>
 <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
