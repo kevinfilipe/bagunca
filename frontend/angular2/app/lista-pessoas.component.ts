@@ -20,8 +20,17 @@ export class ListaPessoasComponent implements OnInit {
   obterPessoas() {
     this.pessoaService.getPessoas()
                       .subscribe(
-                        pessoas => this.pessoas      = pessoas,
+                        pessoas => { this.pessoas = pessoas; this.pessoas.sort(this.sortByName) },
                         error   => this.errorMessage = <any>error );
+  }
+
+  atualizarPessoa(pessoa, event: any) {
+    if (!pessoa.nome) { return; }
+
+    this.pessoaService.atualizarPessoa(pessoa)
+                      .subscribe(
+                        novaPessoa => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.push(novaPessoa); this.pessoas.sort(this.sortByName) },
+                        error      => this.errorMessage = <any>error);
   }
 
   removerPessoa(pessoa, event: any) {
@@ -29,7 +38,14 @@ export class ListaPessoasComponent implements OnInit {
     
     this.pessoaService.removerPessoa(pessoa)
                       .subscribe(
-                        res    => { this.pessoas = this.pessoas.filter(p => p !== pessoa); },
+                        res    => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.sort(this.sortByName) },
                         error  => this.errorMessage = <any>error );
+  }
+
+  sortByName(a,b) {
+    var x = a.nome.toLowerCase();
+    var y = b.nome.toLowerCase();
+    
+    return x < y ? -1 : x > y ? 1 : 0;
   }
 }

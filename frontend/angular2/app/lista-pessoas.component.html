@@ -2,7 +2,8 @@
 <ul class="pessoas">
   <li *ngFor="let pessoa of pessoas">
     <span>{{pessoa._id}}</span>
-    <span>{{pessoa.nome}}</span>
+    <input [(ngModel)]="pessoa.nome" placeholder="Nome" />
+    <button (click)="atualizarPessoa(pessoa, $event)">Atualizar</button>
     <button (click)="removerPessoa(pessoa, $event)">Remover</button>
   </li>
 </ul>

@@ -21,6 +21,17 @@ export class PessoaService {
                     .map((res: Response) => res.json());
   }
 
+  atualizarPessoa(pessoa) {
+    let body    = JSON.stringify(pessoa);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    let url = `${this.pessoasUrl}/${pessoa._id}`;
+
+    return this.http.put(url, body, options)
+                    .map((res: Response) => res.json());
+  }
+
   removerPessoa(pessoa) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
