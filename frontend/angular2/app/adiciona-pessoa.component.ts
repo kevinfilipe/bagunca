@@ -12,7 +12,6 @@ export class AdicionaPessoaComponent {
   public errorMessage;
   @Input()
   public pessoas;
-  mode ='Observable';
   @Output()
   novaPessoaSubmetida = new EventEmitter();
 

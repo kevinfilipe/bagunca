@@ -12,7 +12,6 @@ import {AdicionaPessoaComponent} from './adiciona-pessoa.component';
 export class ListaPessoasComponent implements OnInit {  
   public errorMessage;
   public pessoas;
-  mode ='Observable';
 
   constructor (private pessoaService: PessoaService) {}
 
