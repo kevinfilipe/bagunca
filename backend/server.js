@@ -36,7 +36,8 @@ router.route('/pessoas')
         pessoa.save(function(err) {
             if(err) res.send(err);
 
-            res.json({message: 'Pessoa criada com sucesso!'});
+            res.json(pessoa);
+            // res.json({message: 'Pessoa criada com sucesso!'});
         });
     })
     .get(function(req, res) {
