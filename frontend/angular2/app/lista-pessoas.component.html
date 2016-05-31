@@ -1,0 +1,13 @@
+<h3>Pessoas</h3>
+<ul class="pessoas">
+  <li *ngFor="let pessoa of pessoas">
+    <span>{{pessoa._id}}</span>
+    <span>{{pessoa.nome}}</span>
+  </li>
+</ul>
+Nova Pessoa:
+<input #nomeNovaPessoa placeholder="Nome" />
+<button (click)="adicionarPessoa(nomeNovaPessoa.value); nomeNovaPessoa.value=''">
+  Adicionar Pessoa
+</button>
+<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
