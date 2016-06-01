@@ -46,7 +46,7 @@ export class AnimaisComponent {
             erro => this.mensagemErro = <any>erro );
   }
 
-  sortearPorNome(a, b) {
+  sortearPorNome(a: Animal, b: Animal) {
     var x = a.nome.toLowerCase();
     var y = b.nome.toLowerCase();
     

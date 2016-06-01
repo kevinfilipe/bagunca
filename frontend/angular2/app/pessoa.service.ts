@@ -30,7 +30,7 @@ export class PessoaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    let url = `${this.pessoasUrl}/${pessoa.id}`;
+    let url = `${this.pessoasUrl}/${pessoa._id}`;
 
     return this.http
                 .put(url, body, options)
@@ -38,13 +38,13 @@ export class PessoaService {
   }
 
   remover(pessoa: Pessoa) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
 
-    let url = `${this.pessoasUrl}/${pessoa.id}`;
+    let url = `${this.pessoasUrl}/${pessoa._id}`;
 
     return this.http
-                .delete(url, headers)
+                .delete(url, options)
                 .map((res: Response) => res.json());
   }
 }

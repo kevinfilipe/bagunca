@@ -1,4 +1,4 @@
 export class Pessoa {
-    id:   string;
+    _id:  string;
     nome: string;
 }

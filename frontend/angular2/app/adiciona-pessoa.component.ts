@@ -34,7 +34,7 @@ export class AdicionaPessoaComponent {
     }    
   }
 
-  sortearPorNome(a, b) {
+  sortearPorNome(a: Pessoa, b: Pessoa) {
     var x = a.nome.toLowerCase();
     var y = b.nome.toLowerCase();
     

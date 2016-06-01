@@ -46,7 +46,7 @@ export class PessoasComponent {
             erro => this.mensagemErro = <any>erro );
   }
 
-  sortearPorNome(a, b) {
+  sortearPorNome(a: Pessoa, b: Pessoa) {
     var x = a.nome.toLowerCase();
     var y = b.nome.toLowerCase();
     

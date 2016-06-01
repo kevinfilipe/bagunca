@@ -1,4 +1,4 @@
 export class Animal {
-    id:   string;
+    _id:  string;
     nome: string;
 }
