@@ -1,4 +1,5 @@
 import {Component, OnInit}       from '@angular/core';
+import {Animal}                  from './animal';
 import {AnimalService}           from './animal.service';
 import {AdicionaAnimalComponent} from './adiciona-animal.component';
 
@@ -10,39 +11,41 @@ import {AdicionaAnimalComponent} from './adiciona-animal.component';
 })
 
 export class AnimaisComponent implements OnInit {  
-  public errorMessage;
-  public animais;
+  mensagemErro;
+  animais: Animal[];
 
-  constructor (private animalService: AnimalService) {}
+  constructor(private animalService: AnimalService) {}
 
   ngOnInit() { this.obterAnimais(); }
 
   obterAnimais() {
-    this.animalService.getAnimais()
-                      .subscribe(
-                        animais => { this.animais = animais; this.animais.sort(this.sortByName) },
-                        error   => this.errorMessage = <any>error );
+    this.animalService
+          .consultarTodos()
+          .subscribe(
+            animais => { this.animais = animais; this.animais.sort(this.sortearPorNome) },
+            erro    => this.mensagemErro = <any>erro );
   }
 
-  atualizarAnimal(animal, event: any) {
+  atualizar(animal: Animal, event: any) {
     if (!animal.nome) { return; }
 
-    this.animalService.atualizarAnimal(animal)
-                      .subscribe(
-                        novoAnimal => { this.animais = this.animais.filter(p => p !== animal); this.animais.push(novoAnimal); this.animais.sort(this.sortByName) },
-                        error      => this.errorMessage = <any>error);
+    this.animalService
+          .atualizar(animal)
+          .subscribe(
+            novoAnimal => { this.animais = this.animais.filter(p => p !== animal); this.animais.push(novoAnimal); this.animais.sort(this.sortearPorNome) },
+            erro       => this.mensagemErro = <any>erro );
   }
 
-  removerAnimal(animal, event: any) {
+  remover(animal: Animal, event: any) {
     event.stopPropagation();
     
-    this.animalService.removerAnimal(animal)
+    this.animalService.remover(animal)
                       .subscribe(
-                        res    => { this.animais = this.animais.filter(a => a !== animal); this.animais.sort(this.sortByName) },
-                        error  => this.errorMessage = <any>error );
+                        res    => { this.animais = this.animais.filter(a => a !== animal); this.animais.sort(this.sortearPorNome) },
+                        error  => this.mensagemErro = <any>erro );
   }
 
-  sortByName(a,b) {
+  sortearPorNome(a, b) {
     var x = a.nome.toLowerCase();
     var y = b.nome.toLowerCase();
     

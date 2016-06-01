@@ -1,4 +1,5 @@
-import {Component, OnInit}       from '@angular/core';
+import {Component}               from '@angular/core';
+import {Pessoa}                  from './pessoa';
 import {PessoaService}           from './pessoa.service';
 import {AdicionaPessoaComponent} from './adiciona-pessoa.component';
 
@@ -9,40 +10,42 @@ import {AdicionaPessoaComponent} from './adiciona-pessoa.component';
   directives:  [AdicionaPessoaComponent]
 })
 
-export class PessoasComponent implements OnInit {  
-  public errorMessage;
-  public pessoas;
+export class PessoasComponent {  
+  mensagemErro;
+  pessoas: Pessoa[];
 
   constructor (private pessoaService: PessoaService) {}
 
-  ngOnInit() { this.obterPessoas(); }
+  ngOnInit() { this.consultarTodas(); }
 
-  obterPessoas() {
-    this.pessoaService.getPessoas()
+  consultarTodas() {
+    this.pessoaService.consultarTodas()
                       .subscribe(
-                        pessoas => { this.pessoas = pessoas; this.pessoas.sort(this.sortByName) },
-                        error   => this.errorMessage = <any>error );
+                        pessoas => { this.pessoas = pessoas; this.pessoas.sort(this.sortearPorNome) },
+                        erro    => this.mensagemErro = <any>erro );
   }
 
-  atualizarPessoa(pessoa, event: any) {
+  atualizar(pessoa: Pessoa, event: any) {
     if (!pessoa.nome) { return; }
 
-    this.pessoaService.atualizarPessoa(pessoa)
-                      .subscribe(
-                        novaPessoa => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.push(novaPessoa); this.pessoas.sort(this.sortByName) },
-                        error      => this.errorMessage = <any>error);
+    this.pessoaService
+          .atualizar(pessoa: Pessoa)
+          .subscribe(
+            novaPessoa => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.push(novaPessoa); this.pessoas.sort(this.sortearPorNome) },
+            erro       => this.mensagemErro = <any>erro );
   }
 
-  removerPessoa(pessoa, event: any) {
+  remover(pessoa: Pessoa, event: any) {
     event.stopPropagation();
     
-    this.pessoaService.removerPessoa(pessoa)
-                      .subscribe(
-                        res    => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.sort(this.sortByName) },
-                        error  => this.errorMessage = <any>error );
+    this.pessoaService
+          .remover(pessoa)
+          .subscribe(
+            res  => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.sort(this.sortearPorNome) },
+            erro => this.mensagemErro = <any>erro );
   }
 
-  sortByName(a,b) {
+  sortearPorNome(a, b) {
     var x = a.nome.toLowerCase();
     var y = b.nome.toLowerCase();
     

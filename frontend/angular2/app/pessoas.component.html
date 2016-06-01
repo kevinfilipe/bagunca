@@ -3,9 +3,9 @@
   <li *ngFor="let pessoa of pessoas">
     <span>{{pessoa._id}}</span>
     <input [(ngModel)]="pessoa.nome" placeholder="Nome" />
-    <button (click)="atualizarPessoa(pessoa, $event)">Atualizar</button>
-    <button (click)="removerPessoa(pessoa, $event)">Remover</button>
+    <button (click)="atualizar(pessoa, $event)">Atualizar</button>
+    <button (click)="remover(pessoa, $event)">Remover</button>
   </li>
 </ul>
-<adiciona-pessoa [pessoas]="pessoas" [errorMessage]="errorMessage"></adiciona-pessoa>
-<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
+<adiciona-pessoa [pessoas]="pessoas" [mensagemErro]="mensagemErro"></adiciona-pessoa>
+<div class="error" *ngIf="mensagemErro">{{mensagemErro}}</div>

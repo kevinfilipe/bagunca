@@ -8,20 +8,23 @@ export class AnimalService {
 
   constructor(private http: Http) { }
   
-  getAnimais() {
-    return this.http.get(this.animaisUrl).map((res: Response) => res.json());
+  consultarTodos() {
+    return this.http
+                .get(this.animaisUrl)
+                .map((res: Response) => res.json());
   } 
 
-  adicionarAnimal(nome: string) {
+  adicionar(nome: string) {
     let body    = JSON.stringify({ nome });
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.animaisUrl, body, options)
-                    .map((res: Response) => res.json());
+    return this.http
+                .post(this.animaisUrl, body, options)
+                .map((res: Response) => res.json());
   }
 
-  atualizarAnimal(animal) {
+  atualizar(animal: Animal) {
     let body    = JSON.stringify(animal);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -32,13 +35,14 @@ export class AnimalService {
                     .map((res: Response) => res.json());
   }
 
-  removerAnimal(animal) {
+  remover(animal: Animal) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     let url = `${this.animaisUrl}/${animal._id}`;
 
-    return this.http.delete(url, headers)
-                    .map((res: Response) => res.json());
+    return this.http
+                .delete(url, headers)
+                .map((res: Response) => res.json());
   }
 }

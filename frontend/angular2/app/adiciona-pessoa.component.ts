@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Pessoa}                                 from './pessoa';
 import {PessoaService}                          from './pessoa.service';
 
 @Component({
@@ -9,20 +10,22 @@ import {PessoaService}                          from './pessoa.service';
 
 export class AdicionaPessoaComponent {  
   @Input()
-  public errorMessage;
+  mensagemErro;
   @Input()
-  public pessoas;
+  pessoas: Pessoa[];
   @Output()
   novaPessoaSubmetida = new EventEmitter();
 
-  constructor (private pessoaService: PessoaService) {}
+  constructor(private pessoaService: PessoaService) {}
 
-  adicionarPessoa (nome: string) {
+  adicionar(nome: string) {
     if (!nome) { return; }
-    this.pessoaService.adicionarPessoa(nome)
-                      .subscribe(
-                        pessoa  => { if(this.pessoas) { this.pessoas.push(pessoa); this.pessoas.sort(this.sortByName); } },
-                        error   => this.errorMessage = <any>error);
+
+    this.pessoaService
+          .adicionar(nome)
+          .subscribe(
+            pessoa => { if(this.pessoas) { this.pessoas.push(pessoa); this.pessoas.sort(this.sortearPorNome); } },
+            erro   => this.mensagemErro = <any>erro );
 
     if(this.pessoas) {
       this.novaPessoaSubmetida.emit({
@@ -31,7 +34,7 @@ export class AdicionaPessoaComponent {
     }    
   }
 
-  sortByName(a,b) {
+  sortearPorNome(a, b) {
     var x = a.nome.toLowerCase();
     var y = b.nome.toLowerCase();
     

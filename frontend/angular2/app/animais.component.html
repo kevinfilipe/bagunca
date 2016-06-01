@@ -3,9 +3,9 @@
   <li *ngFor="let animal of animais">
     <span>{{animal._id}}</span>
     <input [(ngModel)]="animal.nome" placeholder="Nome" />
-    <button (click)="atualizarAnimal(animal, $event)">Atualizar</button>
-    <button (click)="removerAnimal(animal, $event)">Remover</button>
+    <button (click)="atualizar(animal, $event)">Atualizar</button>
+    <button (click)="remover(animal, $event)">Remover</button>
   </li>
 </ul>
-<adiciona-animal [animais]="animais" [errorMessage]="errorMessage"></adiciona-animal>
-<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
+<adiciona-animal [animais]="animais" [mensagemErro]="mensagemErro"></adiciona-animal>
+<div class="error" *ngIf="mensagemErro">{{mensagemErro}}</div>

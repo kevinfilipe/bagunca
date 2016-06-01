@@ -1,5 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {AnimalService}                          from './animal.service';
+import {Animal}                                 from './animal';
 
 @Component({
   selector:    'adiciona-animal',
@@ -9,20 +10,21 @@ import {AnimalService}                          from './animal.service';
 
 export class AdicionaAnimalComponent {  
   @Input()
-  public errorMessage;
+  mensagemErro;
   @Input()
-  public animais;
+  animais: Animal[];
   @Output()
   novoAnimalSubmetido = new EventEmitter();
 
-  constructor (private animalService: AnimalService) {}
+  constructor(private animalService: AnimalService) {}
 
-  adicionarAnimal (nome: string) {
+  adicionar(nome: string) {
     if (!nome) { return; }
-    this.animalService.adicionarAnimal(nome)
-                      .subscribe(
-                        animal  => { if(this.animais) { this.animais.push(animal); this.animais.sort(this.sortByName); } },
-                        error   => this.errorMessage = <any>error);
+    this.animalService
+          .adicionar(nome)
+          .subscribe(
+            animal  => { if(this.animais) { this.animais.push(animal); this.animais.sort(this.sortearPorNome); } },
+            erro    => this.mensagemErro = <any>erro );
 
     if(this.animais) {
       this.novoAnimalSubmetido.emit({
@@ -31,7 +33,7 @@ export class AdicionaAnimalComponent {
     }    
   }
 
-  sortByName(a,b) {
+  sortearPorNome(a, b) {
     var x = a.nome.toLowerCase();
     var y = b.nome.toLowerCase();
     
