@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/pessoas');
-
 var Pessoa = require('./app/models/pessoa');
 var Animal = require('./app/models/pessoa');
 
@@ -37,14 +35,22 @@ router.route('/pessoas')
         var pessoa = new Pessoa();
         pessoa.nome = req.body.nome;
 
+        mongoose.connect('mongodb://localhost:27017/pessoas');
+
         pessoa.save(function(err) {
+            mongoose.disconnect();
+
             if(err) res.send(err);
 
             res.json(pessoa);
         });
     })
     .get(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/pessoas');
+
         Pessoa.find(function(err, pessoas) {
+            mongoose.disconnect();
+
             if(err) res.send(err);
 
             res.json(pessoas);
@@ -53,19 +59,27 @@ router.route('/pessoas')
 
 router.route('/pessoas/:id')
     .get(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/pessoas');
+
         Pessoa.findById(req.params.id, function(err, pessoa) {
+            mongoose.disconnect();
+
             if(err) res.send(err);
 
             res.json(pessoa);
         });
     })
     .put(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/pessoas');
+
         Pessoa.findById(req.params.id, function(err, pessoa) {
             if(err) res.send(err);
 
             pessoa.nome = req.body.nome;
 
             pessoa.save(function(err) {
+                mongoose.disconnect();
+
                 if(err) res.send(err);
 
                 res.json(pessoa);
@@ -73,12 +87,16 @@ router.route('/pessoas/:id')
         });
     })
     .delete(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/pessoas');
+
         Pessoa.remove({
             _id: req.params.id
         }, function(err, pessoa) {
+            mongoose.disconnect();
+
             if(err) res.send(err);
 
-            res.json();
+            res.json({});
         });
     });
 
@@ -89,14 +107,22 @@ router.route('/animais')
         var animal = new Animal();
         animal.nome = req.body.nome;
 
+        mongoose.connect('mongodb://localhost:27017/animais');
+
         animal.save(function(err) {
+            mongoose.disconnect();
+
             if(err) res.send(err);
 
             res.json(animal);
         });
     })
     .get(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/animais');
+
         Animal.find(function(err, animais) {
+            mongoose.disconnect();
+
             if(err) res.send(err);
 
             res.json(animais);
@@ -105,19 +131,27 @@ router.route('/animais')
 
 router.route('/animais/:id')
     .get(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/animais');
+
         Animal.findById(req.params.id, function(err, animal) {
+            mongoose.disconnect();
+
             if(err) res.send(err);
 
             res.json(animal);
         });
     })
     .put(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/animais');
+
         Animal.findById(req.params.id, function(err, animal) {
             if(err) res.send(err);
 
             animal.nome = req.body.nome;
 
             animal.save(function(err) {
+                mongoose.disconnect();
+
                 if(err) res.send(err);
 
                 res.json(animal);
@@ -125,12 +159,16 @@ router.route('/animais/:id')
         });
     })
     .delete(function(req, res) {
+        mongoose.connect('mongodb://localhost:27017/animais');
+
         Animal.remove({
             _id: req.params.id
         }, function(err, animal) {
+            mongoose.disconnect();
+            
             if(err) res.send(err);
 
-            res.json();
+            res.json({});
         });
     });    
 
