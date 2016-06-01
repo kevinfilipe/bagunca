@@ -1,0 +1,11 @@
+<h3>Animais</h3>
+<ul class="animais">
+  <li *ngFor="let animal of animais">
+    <span>{{animal._id}}</span>
+    <input [(ngModel)]="animal.nome" placeholder="Nome" />
+    <button (click)="atualizarAnimal(animal, $event)">Atualizar</button>
+    <button (click)="removerAnimal(animal, $event)">Remover</button>
+  </li>
+</ul>
+<adiciona-animal [animais]="animais" [errorMessage]="errorMessage"></adiciona-animal>
+<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>

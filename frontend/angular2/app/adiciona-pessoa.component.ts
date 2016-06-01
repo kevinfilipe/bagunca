@@ -21,7 +21,7 @@ export class AdicionaPessoaComponent {
     if (!nome) { return; }
     this.pessoaService.adicionarPessoa(nome)
                       .subscribe(
-                        pessoa  => { if(this.pessoas) this.pessoas.push(pessoa) },
+                        pessoa  => { if(this.pessoas) { this.pessoas.push(pessoa); this.pessoas.sort(this.sortByName); } },
                         error   => this.errorMessage = <any>error);
 
     if(this.pessoas) {
@@ -29,5 +29,12 @@ export class AdicionaPessoaComponent {
         value: this.pessoas
       });                
     }    
+  }
+
+  sortByName(a,b) {
+    var x = a.nome.toLowerCase();
+    var y = b.nome.toLowerCase();
+    
+    return x < y ? -1 : x > y ? 1 : 0;
   }
 }
