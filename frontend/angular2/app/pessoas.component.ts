@@ -19,17 +19,18 @@ export class PessoasComponent {
   ngOnInit() { this.consultarTodas(); }
 
   consultarTodas() {
-    this.pessoaService.consultarTodas()
-                      .subscribe(
-                        pessoas => { this.pessoas = pessoas; this.pessoas.sort(this.sortearPorNome) },
-                        erro    => this.mensagemErro = <any>erro );
+    this.pessoaService
+          .consultarTodas()
+          .subscribe(
+            pessoas => { this.pessoas = pessoas; this.pessoas.sort(this.sortearPorNome) },
+            erro    => this.mensagemErro = <any>erro );
   }
 
   atualizar(pessoa: Pessoa, event: any) {
     if (!pessoa.nome) { return; }
 
     this.pessoaService
-          .atualizar(pessoa: Pessoa)
+          .atualizar(pessoa)
           .subscribe(
             novaPessoa => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.push(novaPessoa); this.pessoas.sort(this.sortearPorNome) },
             erro       => this.mensagemErro = <any>erro );

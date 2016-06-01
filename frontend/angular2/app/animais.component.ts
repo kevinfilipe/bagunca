@@ -1,4 +1,4 @@
-import {Component, OnInit}       from '@angular/core';
+import {Component}               from '@angular/core';
 import {Animal}                  from './animal';
 import {AnimalService}           from './animal.service';
 import {AdicionaAnimalComponent} from './adiciona-animal.component';
@@ -10,7 +10,7 @@ import {AdicionaAnimalComponent} from './adiciona-animal.component';
   directives:  [AdicionaAnimalComponent]
 })
 
-export class AnimaisComponent implements OnInit {  
+export class AnimaisComponent {  
   mensagemErro;
   animais: Animal[];
 
@@ -39,10 +39,11 @@ export class AnimaisComponent implements OnInit {
   remover(animal: Animal, event: any) {
     event.stopPropagation();
     
-    this.animalService.remover(animal)
-                      .subscribe(
-                        res    => { this.animais = this.animais.filter(a => a !== animal); this.animais.sort(this.sortearPorNome) },
-                        error  => this.mensagemErro = <any>erro );
+    this.animalService
+          .remover(animal)
+          .subscribe(
+            res  => { this.animais = this.animais.filter(a => a !== animal); this.animais.sort(this.sortearPorNome) },
+            erro => this.mensagemErro = <any>erro );
   }
 
   sortearPorNome(a, b) {

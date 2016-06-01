@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {AnimalService}                          from './animal.service';
 import {Animal}                                 from './animal';
+import {AnimalService}                          from './animal.service';
 
 @Component({
   selector:    'adiciona-animal',
@@ -20,6 +20,7 @@ export class AdicionaAnimalComponent {
 
   adicionar(nome: string) {
     if (!nome) { return; }
+
     this.animalService
           .adicionar(nome)
           .subscribe(
