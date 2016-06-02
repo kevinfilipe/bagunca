@@ -1,6 +1,12 @@
-Novo Animal:
-<input #nomeNovoAnimal placeholder="Nome" />
-<button (click)="adicionar(nomeNovoAnimal.value); nomeNovoAnimal.value=''">
-  Adicionar
-</button>
-<div class="error" *ngIf="mensagemErro">{{mensagemErro}}</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="input-group">
+            <input #nomeNovoAnimal type="text" class="form-control" placeholder="Nome do Novo Animal">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" (click)="adicionar(nomeNovoAnimal.value); nomeNovoAnimal.value=''">
+                    Adicionar
+                </button>
+            </span>
+        </div>
+    </div>
+</div>

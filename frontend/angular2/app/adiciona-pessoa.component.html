@@ -1,6 +1,12 @@
-Nova Pessoa:
-<input #nomeNovaPessoa placeholder="Nome" />
-<button (click)="adicionar(nomeNovaPessoa.value); nomeNovaPessoa.value=''">
-  Adicionar
-</button>
-<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="input-group">
+            <input #nomeNovaPessoa type="text" class="form-control" placeholder="Nome da Nova Pessoa">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" (click)="adicionar(nomeNovaPessoa.value); nomeNovaPessoa.value=''">
+                    Adicionar
+                </button>
+            </span>
+        </div>
+    </div>
+</div>

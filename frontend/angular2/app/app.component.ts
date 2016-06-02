@@ -30,4 +30,17 @@ import {AnimalService}                                    from './animal.service
   }
 ])
 
-export class AppComponent {}
+export class AppComponent {
+  pessoasChecked: boolean;
+  animaisChecked: boolean;
+
+  ativarAbaPessoas() {
+    this.animaisChecked = false;
+    this.pessoasChecked = !this.pessoasChecked;
+  }
+
+  ativarAbaAnimais() {
+    this.pessoasChecked = false;
+    this.animaisChecked = !this.animaisChecked;
+  }
+}

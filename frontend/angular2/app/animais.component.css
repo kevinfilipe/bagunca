@@ -1,0 +1,23 @@
+.th-animais {
+    text-align: center;
+}
+
+.th-identificador {
+    width: 245px;
+}
+
+.th-atualizar-remover {
+    width: 120px;
+}
+
+.td-atualizar-remover {
+    width: 120px;
+}
+
+.margem-topo {
+    margin-top: 20px;
+}
+
+.texto-centralizado {
+    text-align: center;
+}

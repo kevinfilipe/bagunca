@@ -5,6 +5,7 @@ h1 {
 }
 body {
   margin: 2em;
+  padding-top: 70px;
 }
  /*
   * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
