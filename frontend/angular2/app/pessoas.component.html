@@ -1,4 +1,4 @@
-<div class="margem-topo alert alert-danger alert-dismissible" role="alert" *ngIf="mensagemErro">{{mensagemErro}}</div>
+<div class="margem-topo alert alert-danger alert-dismissible" role="alert" *ngIf="erro.mensagem">{{erro.mensagem}}</div>
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>
@@ -29,4 +29,4 @@
   </table>
 </div>
 <div class="margem-topo"></div>
-<adiciona-pessoa [pessoas]="pessoas" [mensagemErro]="mensagemErro"></adiciona-pessoa>
+<adiciona-pessoa [pessoas]="pessoas" [erro]="erro"></adiciona-pessoa>

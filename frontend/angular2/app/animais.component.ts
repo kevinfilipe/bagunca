@@ -2,6 +2,7 @@ import {Component}               from '@angular/core';
 import {Animal}                  from './animal';
 import {AnimalService}           from './animal.service';
 import {AdicionaAnimalComponent} from './adiciona-animal.component';
+import {Erro}                    from './erro';
 
 @Component({
   selector:    'animais',
@@ -11,19 +12,23 @@ import {AdicionaAnimalComponent} from './adiciona-animal.component';
 })
 
 export class AnimaisComponent {  
-  mensagemErro;
+  erro: Erro;
   animais: Animal[];
 
   constructor(private animalService: AnimalService) {}
 
-  ngOnInit() { this.obterAnimais(); }
+  ngOnInit() { 
+    this.erro = new Erro();
 
-  obterAnimais() {
+    this.consultarTodos(); 
+  }
+
+  consultarTodos() {
     this.animalService
           .consultarTodos()
           .subscribe(
             animais => { this.animais = animais; this.animais.sort(this.sortearPorNome) },
-            erro    => this.mensagemErro = <any>erro );
+            erro    => this.erro.mensagem = <any>erro );
   }
 
   atualizar(animal: Animal, event: any) {
@@ -33,7 +38,7 @@ export class AnimaisComponent {
           .atualizar(animal)
           .subscribe(
             novoAnimal => { this.animais = this.animais.filter(p => p !== animal); this.animais.push(novoAnimal); this.animais.sort(this.sortearPorNome) },
-            erro       => this.mensagemErro = <any>erro );
+            erro       => this.erro.mensagem = <any>erro );
   }
 
   remover(animal: Animal, event: any) {
@@ -43,7 +48,7 @@ export class AnimaisComponent {
           .remover(animal)
           .subscribe(
             res  => { this.animais = this.animais.filter(a => a !== animal); this.animais.sort(this.sortearPorNome) },
-            erro => this.mensagemErro = <any>erro );
+            erro => this.erro.mensagem = <any>erro );
   }
 
   sortearPorNome(a: Animal, b: Animal) {

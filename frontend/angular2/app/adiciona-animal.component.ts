@@ -1,6 +1,7 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {Animal}                                 from './animal';
-import {AnimalService}                          from './animal.service';
+import {Component, Input, Output} from '@angular/core';
+import {Animal}                   from './animal';
+import {AnimalService}            from './animal.service';
+import {Erro}                     from './erro';
 
 @Component({
   selector:    'adiciona-animal',
@@ -10,11 +11,9 @@ import {AnimalService}                          from './animal.service';
 
 export class AdicionaAnimalComponent {  
   @Input()
-  mensagemErro;
+  erro: Erro;
   @Input()
   animais: Animal[];
-  @Output()
-  novoAnimalSubmetido = new EventEmitter();
 
   constructor(private animalService: AnimalService) {}
 
@@ -24,14 +23,19 @@ export class AdicionaAnimalComponent {
     this.animalService
           .adicionar(nome)
           .subscribe(
-            animal  => { if(this.animais) { this.animais.push(animal); this.animais.sort(this.sortearPorNome); } },
-            erro    => this.mensagemErro = <any>erro );
-
-    if(this.animais) {
-      this.novoAnimalSubmetido.emit({
-        value: this.animais
-      });                
-    }    
+            resultado => {
+                if (!resultado.mensagem) {
+                    if(this.animais) {
+                       this.animais.push(resultado);
+                       this.animais.sort(this.sortearPorNome);
+                    }
+                } else {
+                    this.erro.status   = resultado.status;
+                    this.erro.mensagem = resultado.mensagem;
+                    this.erro.codigo   = resultado.codigo;
+                }
+            },
+            erro   => this.erro.mensagem = <any>erro );  
   }
 
   sortearPorNome(a: Animal, b: Animal) {

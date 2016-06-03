@@ -1,6 +1,7 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {Pessoa}                                 from './pessoa';
-import {PessoaService}                          from './pessoa.service';
+import {Component, Input, Output} from '@angular/core';
+import {Pessoa}                   from './pessoa';
+import {PessoaService}            from './pessoa.service';
+import {Erro}                     from './erro';
 
 @Component({
   selector:    'adiciona-pessoa',
@@ -10,11 +11,9 @@ import {PessoaService}                          from './pessoa.service';
 
 export class AdicionaPessoaComponent {  
   @Input()
-  mensagemErro;
+  erro: Erro;
   @Input()
   pessoas: Pessoa[];
-  @Output()
-  novaPessoaSubmetida = new EventEmitter();
 
   constructor(private pessoaService: PessoaService) {}
 
@@ -24,14 +23,19 @@ export class AdicionaPessoaComponent {
     this.pessoaService
           .adicionar(nome)
           .subscribe(
-            pessoa => { if(this.pessoas) { this.pessoas.push(pessoa); this.pessoas.sort(this.sortearPorNome); } },
-            erro   => this.mensagemErro = <any>erro );
-
-    if(this.pessoas) {
-      this.novaPessoaSubmetida.emit({
-        value: this.pessoas
-      });                
-    }    
+            resultado => { 
+                if (!resultado.mensagem) {
+                    if(this.pessoas) {
+                       this.pessoas.push(resultado);
+                       this.pessoas.sort(this.sortearPorNome);
+                    }
+                } else {
+                    this.erro.status   = resultado.status;
+                    this.erro.mensagem = resultado.mensagem;
+                    this.erro.codigo   = resultado.codigo;
+                }
+            },
+            erro   => this.erro.mensagem = <any>erro );  
   }
 
   sortearPorNome(a: Pessoa, b: Pessoa) {

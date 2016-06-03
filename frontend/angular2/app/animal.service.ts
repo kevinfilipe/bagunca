@@ -38,13 +38,13 @@ export class AnimalService {
   }
 
   remover(animal: Animal) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
 
     let url = `${this.animaisUrl}/${animal._id}`;
 
     return this.http
-                .delete(url, headers)
+                .delete(url, options)
                 .map((res: Response) => res.json());
   }
 }
