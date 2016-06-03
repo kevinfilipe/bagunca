@@ -295,9 +295,9 @@ router.route('/animais/:id')
             return res.status(400).json({ status: 400, mensagem: 'Identificador do animal nao preenchido corretamente', codigo: 00005 });
         }
 
-        mongoose.connect('mongodb://localhost:27017/pessoas');
+        mongoose.connect('mongodb://localhost:27017/animais');
 
-        Pessoa.remove({
+        Animal.remove({
             _id: req.params.id
         }, function(err, animal) {
             mongoose.disconnect();
