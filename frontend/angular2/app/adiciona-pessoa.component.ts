@@ -1,17 +1,27 @@
-import {Component, Input, Output} from '@angular/core';
-import {Pessoa}                   from './pessoa';
-import {PessoaService}            from './pessoa.service';
-import {Erro}                     from './erro';
+import {Component, EventEmitter, Input, Output, ViewChild}                from '@angular/core';
+import {CORE_DIRECTIVES}                                                  from '@angular/common';
+import * as moment                                                        from 'moment';
+import {BS_VIEW_PROVIDERS, ModalDirective, MODAL_DIRECTVES, ModalOptions} from 'ng2-bootstrap/ng2-bootstrap';
+import {Pessoa}                                                           from './pessoa';
+import {PessoaService}                                                    from './pessoa.service';
+import {Erro}                                                             from './erro';
 
 @Component({
-  selector:    'adiciona-pessoa',
-  templateUrl: 'app/adiciona-pessoa.component.html',
-  styleUrls:   ['app/adiciona-pessoa.component.css']
+  selector:      'adiciona-pessoa',
+  templateUrl:   'app/adiciona-pessoa.component.html',
+  styleUrls:     ['app/adiciona-pessoa.component.css'],
+  directives:    [MODAL_DIRECTVES, CORE_DIRECTIVES],
+  viewProviders: [BS_VIEW_PROVIDERS]
 })
 
-export class AdicionaPessoaComponent {  
+export class AdicionaPessoaComponent {
+ 
+  @ViewChild('lgModal') 
+  bgModel;
+
   @Input()
   erro: Erro;
+  
   @Input()
   pessoas: Pessoa[];
 
@@ -43,5 +53,9 @@ export class AdicionaPessoaComponent {
     var y = b.nome.toLowerCase();
     
     return x < y ? -1 : x > y ? 1 : 0;
+  }
+
+  aoAbrirModal() {
+    this.bgModel.show();
   }
 }

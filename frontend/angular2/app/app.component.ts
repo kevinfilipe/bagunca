@@ -1,4 +1,4 @@
-import {Component}                                        from '@angular/core';
+import {Component, ViewContainerRef}                      from '@angular/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {PessoasComponent}                                 from './pessoas.component';
 import {PessoaService}                                    from './pessoa.service';
@@ -31,6 +31,12 @@ import {AnimalService}                                    from './animal.service
 ])
 
 export class AppComponent {
+  viewContainerRef: ViewContainerRef;
+
+  public constructor(viewContainerRef: ViewContainerRef) {
+    this.viewContainerRef = viewContainerRef;
+  }
+
   pessoasChecked: boolean;
   animaisChecked: boolean;
 
