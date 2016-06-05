@@ -1,12 +1,39 @@
-<div class="row">
-    <div class="col-lg-3">
-        <div class="input-group">
-            <input #nomeNovaPessoa type="text" class="form-control" placeholder="Nome da Nova Pessoa">
-            <span class="input-group-btn">
-                <button class="btn btn-primary" (click)="adicionar(nomeNovaPessoa.value); nomeNovaPessoa.value=''">
-                    Adicionar
-                </button>
-            </span>
+<button class="btn btn-primary" (click)="definirNovo()">Nova</button>
+<div bsModal #modalPessoa="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modalPessoa.hide()" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel" [hidden]="editandoPessoa">Nova Pessoa</h4>
+        <h4 class="modal-title" id="gridSystemModalLabel" [hidden]="!editandoPessoa">Editar Pessoa</h4>
+      </div>
+
+      <form #pessoaForm="ngForm" *ngIf="formularioAtivo" (ngSubmit)="salvar()">
+        <div class="modal-body"> 
+            <alert *ngIf="mensagemModal.msg" [type]="mensagemModal.type" dismissible="true" (close)="alertaFechado()">
+              {{ mensagemModal.msg }}
+            </alert>
+
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input #nome="ngForm" [(ngModel)]="pessoa.nome" ngControl="nome" type="text" class="form-control" placeholder="Nome da Pessoa" required>
+              <div [hidden]="nome.valid || nome.pristine" class="alert alert-danger">
+                O Nome e Obrigatorio
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input #email="ngForm" [(ngModel)]="pessoa.email" ngControl="email" type="email" class="form-control" placeholder="Email da Pessoa">
+            </div>
         </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="modalPessoa.hide()">Cancelar</button>
+          <button type="submit" class="btn btn-success" [disabled]="!pessoaForm.form.valid">Salvar e Continuar</button>
+          <button type="submit" class="btn btn-success" [disabled]="!pessoaForm.form.valid" (click)="fecharModal = true;">Savar e Fechar</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

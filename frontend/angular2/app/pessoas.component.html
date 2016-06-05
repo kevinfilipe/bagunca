@@ -1,13 +1,16 @@
-<div class="margem-topo alert alert-danger alert-dismissible" role="alert" *ngIf="erro.mensagem">{{erro.mensagem}}</div>
+<alert *ngIf="mensagem.msg" [type]="mensagem.type" dismissible="true" dismissOnTimeout="6000">
+    {{ mensagem.msg }}
+</alert>
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th class="th-pessoas" colspan="4">Pessoas</th>
+            <th class="th-pessoas" colspan="5">Pessoas</th>
         </tr>
         <tr>
             <th class="th-identificador texto-centralizado">Identificador</th>
             <th class="texto-centralizado">Nome</th>
+            <th class="texto-centralizado">Email</th>
             <th class="th-atualizar-remover"></th>
             <th class="th-atualizar-remover"></th>
         </tr>
@@ -16,17 +19,15 @@
         <tr *ngFor="let pessoa of pessoas">
             <th class="th-identificador texto-centralizado">{{pessoa._id}}</th>
             <td>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <input class="form-control" [(ngModel)]="pessoa.nome" placeholder="Nome" />
-                    </div>
-                </div>
+                <span>{{pessoa.nome}}</span>
             </td>    
-            <td class="td-atualizar-remover texto-centralizado"><button class="btn btn-warning" (click)="atualizar(pessoa, $event)">Atualizar</button></td>
+            <td>
+                <span>{{pessoa.email}}</span>
+            </td>
+            <td class="td-atualizar-remover texto-centralizado"><button class="btn btn-warning" (click)="adicionaPessoa.definirEditar(pessoa, $event)">Editar</button></td>
             <td class="td-atualizar-remover texto-centralizado"><button class="btn btn-danger" (click)="remover(pessoa, $event)">Remover</button></td>
         </tr>
     </tbody>
   </table>
 </div>
-<div class="margem-topo"></div>
-<adiciona-pessoa [pessoas]="pessoas" [erro]="erro"></adiciona-pessoa>
+<adiciona-pessoa #adicionaPessoa [pessoas]="pessoas" [mensagem]="mensagem"></adiciona-pessoa>

@@ -1,5 +1,6 @@
-import {Component}                                        from '@angular/core';
+import {Component, ViewContainerRef}                      from '@angular/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated';
+import {Title}                                            from '@angular/platform-browser';
 import {PessoasComponent}                                 from './pessoas.component';
 import {PessoaService}                                    from './pessoa.service';
 import {AnimaisComponent}                                 from './animais.component';
@@ -31,6 +32,16 @@ import {AnimalService}                                    from './animal.service
 ])
 
 export class AppComponent {
+  viewContainerRef: ViewContainerRef;
+
+  public constructor(viewContainerRef: ViewContainerRef, private titleService: Title) {
+    this.viewContainerRef = viewContainerRef;
+  }
+
+  ngOnInit() {
+      this.titleService.setTitle('Cadastro de Pessoas e Animais - Home');
+  }
+
   pessoasChecked: boolean;
   animaisChecked: boolean;
 

@@ -1,24 +1,27 @@
 import {Component}               from '@angular/core';
+import {Title}                   from '@angular/platform-browser';
+import {AlertComponent}          from 'ng2-bootstrap/ng2-bootstrap';
 import {Pessoa}                  from './pessoa';
 import {PessoaService}           from './pessoa.service';
 import {AdicionaPessoaComponent} from './adiciona-pessoa.component';
-import {Erro}                    from './erro';
+import {Mensagem}                from './mensagem';
 
 @Component({
   selector:    'pessoas',
   templateUrl: 'app/pessoas.component.html',
   styleUrls:   ['app/pessoas.component.css'],
-  directives:  [AdicionaPessoaComponent]
+  directives: [AlertComponent, AdicionaPessoaComponent]
 })
 
 export class PessoasComponent {  
-  erro: Erro;
+  mensagem: Mensagem;
   pessoas: Pessoa[];
 
-  constructor (private pessoaService: PessoaService) {}
+  constructor(private pessoaService: PessoaService, private titleService: Title) { }
 
   ngOnInit() { 
-    this.erro = new Erro();
+    this.titleService.setTitle('Cadastro de Pessoas');
+    this.mensagem = new Mensagem();
 
     this.consultarTodas(); 
   }
@@ -27,18 +30,14 @@ export class PessoasComponent {
     this.pessoaService
           .consultarTodas()
           .subscribe(
-            pessoas => { this.pessoas = pessoas; this.pessoas.sort(this.sortearPorNome) },
-            erro    => this.erro.mensagem = <any>erro);
-  }
-
-  atualizar(pessoa: Pessoa, event: any) {
-      if (!pessoa.nome) { return; }
-
-      this.pessoaService
-          .atualizar(pessoa)
-          .subscribe(
-          novaPessoa => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.push(novaPessoa); this.pessoas.sort(this.sortearPorNome) },
-          erro       => this.erro.mensagem = <any>erro );
+            pessoas => { 
+              this.pessoas = pessoas;
+              this.pessoas.sort(this.sortearPorNome) 
+            },
+            erro => {
+              this.mensagem.tipo = 'danger';
+              this.mensagem.conteudo = <any>erro;
+            });
   }
 
   remover(pessoa: Pessoa, event: any) {
@@ -47,8 +46,14 @@ export class PessoasComponent {
     this.pessoaService
           .remover(pessoa)
           .subscribe(
-            res  => { this.pessoas = this.pessoas.filter(p => p !== pessoa); this.pessoas.sort(this.sortearPorNome) },
-            erro => this.erro.mensagem = <any>erro);
+            res  => { 
+              this.pessoas = this.pessoas.filter(p => p !== pessoa); 
+              this.pessoas.sort(this.sortearPorNome) 
+            },
+            erro => {
+              this.mensagem.tipo = 'danger';
+              this.mensagem.conteudo = <any>erro;
+            });
   }
 
   sortearPorNome(a: Pessoa, b: Pessoa) {
