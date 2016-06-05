@@ -58,6 +58,7 @@ router.route('/pessoas')
 
         var pessoa = new Pessoa();
         pessoa.nome = req.body.nome;
+        pessoa.email = req.body.email;
 
         mongoose.connect('mongodb://localhost:27017/pessoas');
 
@@ -135,13 +136,10 @@ router.route('/pessoas/:id')
                 mongoose.disconnect();
 
                 return res.status(400).json({ status: 400, mensagem: 'Informacoes da pessoa nao preenchidas corretamente', codigo: 00001 });
-            } else if(pessoa.nome == req.body.nome) {
-                mongoose.disconnect();
-
-                return res.status(304).json(pessoa);
-            }
+            } 
 
             pessoa.nome = req.body.nome;
+            pessoa.email = req.body.email;
 
             pessoa.save(function(err) {
                 mongoose.disconnect();
