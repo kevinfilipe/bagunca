@@ -1,58 +1,39 @@
-<div class="row">
-    <div class="col-lg-3">
-        <div class="input-group">
-            <input #nomeNovaPessoa type="text" class="form-control" placeholder="Nome da Nova Pessoa">
-            <span class="input-group-btn">
-                <button class="btn btn-primary" (click)="adicionar(nomeNovaPessoa.value); nomeNovaPessoa.value=''">
-                    Adicionar
-                </button>
-            </span>
-        </div>
-    </div>
-</div>
-
-
-<!-- Large modal -->
-<button class="btn btn-primary" (click)="aoAbrirModal()">Large modal</button>
-
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+<button class="btn btn-primary" (click)="definirNovo()">Nova</button>
+<div bsModal #modalPessoa="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">Nova Pessoa</h4>
+        <button type="button" class="close" (click)="modalPessoa.hide()" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel" [hidden]="editandoPessoa">Nova Pessoa</h4>
+        <h4 class="modal-title" id="gridSystemModalLabel" [hidden]="!editandoPessoa">Editar Pessoa</h4>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-4">.col-md-4</div>
-          <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 col-md-offset-3">.col-md-3 .col-md-offset-3</div>
-          <div class="col-md-2 col-md-offset-4">.col-md-2 .col-md-offset-4</div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3">.col-md-6 .col-md-offset-3</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-9">
-            Level 1: .col-sm-9
-            <div class="row">
-              <div class="col-xs-8 col-sm-6">
-                Level 2: .col-xs-8 .col-sm-6
-              </div>
-              <div class="col-xs-4 col-sm-6">
-                Level 2: .col-xs-4 .col-sm-6
+
+      <form #pessoaForm="ngForm" *ngIf="formularioAtivo" (ngSubmit)="salvar()">
+        <div class="modal-body"> 
+            <alert *ngIf="mensagemModal.msg" [type]="mensagemModal.type" dismissible="true" (close)="alertaFechado()">
+              {{ mensagemModal.msg }}
+            </alert>
+
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input #nome="ngForm" [(ngModel)]="pessoa.nome" ngControl="nome" type="text" class="form-control" placeholder="Nome da Pessoa" required>
+              <div [hidden]="nome.valid || nome.pristine" class="alert alert-danger">
+                O Nome e Obrigatorio
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="lgModal.hide()">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input #email="ngForm" [(ngModel)]="pessoa.email" ngControl="email" type="email" class="form-control" placeholder="Email da Pessoa">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="modalPessoa.hide()">Cancelar</button>
+          <button type="submit" class="btn btn-success" [disabled]="!pessoaForm.form.valid">Salvar e Continuar</button>
+          <button type="submit" class="btn btn-success" [disabled]="!pessoaForm.form.valid" (click)="fecharModal = true;">Savar e Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

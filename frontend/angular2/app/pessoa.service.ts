@@ -15,8 +15,8 @@ export class PessoaService {
                 .map((res: Response) => res.json());
   } 
 
-  adicionar(nome: string) {
-    let body    = JSON.stringify({ nome });
+  adicionar(pessoa: Pessoa) {
+    let body    = JSON.stringify(pessoa);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 

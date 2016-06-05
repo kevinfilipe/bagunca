@@ -1,5 +1,5 @@
 export class Erro {
-    status:   number;
+    status: number;
     mensagem: string;
-    codigo:   number;
+    codigo: string;
 }
