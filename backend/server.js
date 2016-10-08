@@ -2,37 +2,10 @@ var express        = require('express'),
     bodyParser     = require('body-parser'),
     cors           = require('cors'),
     app            = express(),
-    morgan         = require("morgan"),
-    expressWinston = require('express-winston');
-    winston        = require('winston');
-    port           = process.env.PORT || 9000,
-    router         = express.Router();
-
-var logger = new winston.Logger({
-  transports: [
-    new winston.transports.File({
-      level:            'warn',
-      filename:         './requisicoes-servidor.log',
-      handleExceptions: true,
-      json:             false,
-      colorize:         true
-    }),
-    new (winston.transports.Console)({
-      level:            'error',
-      handleExceptions: true,
-      json:             false,
-      colorize:         true
-    })
-  ], 
-  exitOnError: false 
-});
-
-
-logger.stream = { 
-  write: function(message, encoding){ 
-    logger.warn(message); 
-  } 
-}; 
+    router         = express.Router(),
+    nodePort       = process.env.NODE_PORT,
+    hostMongoDB    = process.env.MONGO_PORT_27017_TCP_ADDR + ':' + process.env.MONGO_PORT_27017_TCP_PORT;
+    
 
 var mongoose = require('mongoose'),
     Pessoa   = require('./app/models/pessoa'),
@@ -41,8 +14,6 @@ var mongoose = require('mongoose'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-
-app.use(morgan('[:remote-addr - :date[clf]] HTTP/:http-version :status :method :url ":user-agent"', { "stream": logger.stream }));
 
 router.get('/', function(req, res) {
     res.json({message: 'API - Pessoas | Animais'});
@@ -60,13 +31,13 @@ router.route('/pessoas')
         pessoa.nome = req.body.nome;
         pessoa.email = req.body.email;
 
-        mongoose.connect('mongodb://localhost:27017/pessoas');
+        mongoose.connect('mongodb://' + hostMongoDB + '/pessoas');
 
         pessoa.save(function(err) {
             mongoose.disconnect();
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -75,13 +46,13 @@ router.route('/pessoas')
         });
     })
     .get(function(req, res) {
-        mongoose.connect('mongodb://localhost:27017/pessoas');
+        mongoose.connect('mongodb://' + hostMongoDB + '/pessoas');
 
         Pessoa.find(function(err, pessoas) {
             mongoose.disconnect();
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -96,13 +67,13 @@ router.route('/pessoas/:id')
             return res.status(400).json({ status: 400, mensagem: 'Identificador da pessoa nao preenchido corretamente', codigo: 00002 });
         }
 
-        mongoose.connect('mongodb://localhost:27017/pessoas');
+        mongoose.connect('mongodb://' + hostMongoDB + '/pessoas');
 
         Pessoa.findById(req.params.id, function(err, pessoa) {
             mongoose.disconnect();
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -117,13 +88,13 @@ router.route('/pessoas/:id')
             return res.status(400).json({ status: 400, mensagem: 'Identificador da pessoa nao preenchido corretamente', codigo: 00002 });
         }
 
-        mongoose.connect('mongodb://localhost:27017/pessoas');
+        mongoose.connect('mongodb://' + hostMongoDB + '/pessoas');
 
         Pessoa.findById(req.params.id, function(err, pessoa) {
             if(err) { 
                 mongoose.disconnect();
 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -145,7 +116,7 @@ router.route('/pessoas/:id')
                 mongoose.disconnect();
 
                 if(err) { 
-                    logger.error(err);
+                    console.error(err);
                 
                     return res.json({ status: 200, mensagem: err.message, codigo: err.code });
                 }
@@ -159,7 +130,7 @@ router.route('/pessoas/:id')
             return res.status(400).json({ status: 400, mensagem: 'Identificador da pessoa nao preenchido corretamente', codigo: 00002 });
         }
 
-        mongoose.connect('mongodb://localhost:27017/pessoas');
+        mongoose.connect('mongodb://' + hostMongoDB + '/pessoas');
 
         Pessoa.remove({
             _id: req.params.id
@@ -171,7 +142,7 @@ router.route('/pessoas/:id')
             }
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -191,13 +162,13 @@ router.route('/animais')
         var animal = new Animal();
         animal.nome = req.body.nome;
 
-        mongoose.connect('mongodb://localhost:27017/animais');
+        mongoose.connect('mongodb://' + hostMongoDB + '/animais');
 
         animal.save(function(err) {
             mongoose.disconnect();
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -206,13 +177,13 @@ router.route('/animais')
         });
     })
     .get(function(req, res) {
-        mongoose.connect('mongodb://localhost:27017/animais');
+        mongoose.connect('mongodb://' + hostMongoDB + '/animais');
 
         Animal.find(function(err, animais) {
             mongoose.disconnect();
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -227,13 +198,13 @@ router.route('/animais/:id')
             return res.status(400).json({ status: 400, mensagem: 'Identificador do animal nao preenchido corretamente', codigo: 00005 });
         }
 
-        mongoose.connect('mongodb://localhost:27017/animais');
+        mongoose.connect('mongodb://' + hostMongoDB + '/animais');
 
         Animal.findById(req.params.id, function(err, animal) {
             mongoose.disconnect();
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -248,13 +219,13 @@ router.route('/animais/:id')
             return res.status(400).json({ status: 400, mensagem: 'Identificador do animal nao preenchido corretamente', codigo: 00005 });
         }
 
-        mongoose.connect('mongodb://localhost:27017/animais');
+        mongoose.connect('mongodb://' + hostMongoDB + '/animais');
 
         Animal.findById(req.params.id, function(err, animal) {
             if(err) { 
                 mongoose.disconnect();
 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -279,7 +250,7 @@ router.route('/animais/:id')
                 mongoose.disconnect();
 
                 if(err) { 
-                    logger.error(err);
+                    console.error(err);
                 
                     return res.json({ status: 200, mensagem: err.message, codigo: err.code });
                 }
@@ -293,7 +264,7 @@ router.route('/animais/:id')
             return res.status(400).json({ status: 400, mensagem: 'Identificador do animal nao preenchido corretamente', codigo: 00005 });
         }
 
-        mongoose.connect('mongodb://localhost:27017/animais');
+        mongoose.connect('mongodb://' + hostMongoDB + '/animais');
 
         Animal.remove({
             _id: req.params.id
@@ -305,7 +276,7 @@ router.route('/animais/:id')
             }
 
             if(err) { 
-                logger.error(err);
+                console.error(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -316,4 +287,4 @@ router.route('/animais/:id')
 
 app.use('/api', router);
 
-app.listen(port);
+app.listen(nodePort);
