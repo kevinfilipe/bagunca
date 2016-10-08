@@ -4,9 +4,6 @@
     "dependencies": {
         "express":         "latest",
         "cors":            "latest",
-        "morgan":          "latest",
-        "express-winston": "latest",
-        "winston":         "latest",
         "mongoose":        "latest",
         "body-parser":     "latest"
     }
