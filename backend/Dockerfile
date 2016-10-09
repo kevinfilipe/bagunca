@@ -1,14 +1,16 @@
 FROM node:latest
 
-COPY package.json /app/node/
+COPY package.json /node-api/
 
-WORKDIR /app/node
+WORKDIR /node-api
 
 RUN npm install
 
-COPY app/ /app/node/app/
+RUN npm install -g nodemon
 
-COPY server.js /app/node/
+COPY app/ /node-api/app/
+
+COPY server.js /node-api/
 
 ENV NODE_PORT 9001
 
