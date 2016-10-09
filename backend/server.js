@@ -4,7 +4,7 @@ var express        = require('express'),
     app            = express(),
     router         = express.Router(),
     nodePort       = process.env.NODE_PORT,
-    hostMongoDB    = process.env.MONGO_PORT_27017_TCP_ADDR + ':' + process.env.MONGO_PORT_27017_TCP_PORT;
+    hostMongoDB    = process.env.MONGODB_PORT_27017_TCP_ADDR + ':' + process.env.MONGODB_PORT_27017_TCP_PORT;
     
 
 var mongoose = require('mongoose'),
@@ -14,6 +14,12 @@ var mongoose = require('mongoose'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+
+router.use(function (req, res, next) {
+  console.log('['+ Date.now() + ']' + ' Requisição recebida. Método: ' + req.method + ' URL: ' + req.originalUrl + '.');
+
+  next();
+});
 
 router.get('/', function(req, res) {
     res.json({message: 'API - Pessoas | Animais'});
@@ -37,7 +43,7 @@ router.route('/pessoas')
             mongoose.disconnect();
 
             if(err) { 
-                console.error(err);
+                console.log(err);
 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -52,7 +58,7 @@ router.route('/pessoas')
             mongoose.disconnect();
 
             if(err) { 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -73,7 +79,7 @@ router.route('/pessoas/:id')
             mongoose.disconnect();
 
             if(err) { 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -94,7 +100,7 @@ router.route('/pessoas/:id')
             if(err) { 
                 mongoose.disconnect();
 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -116,7 +122,7 @@ router.route('/pessoas/:id')
                 mongoose.disconnect();
 
                 if(err) { 
-                    console.error(err);
+                    console.log(err);
                 
                     return res.json({ status: 200, mensagem: err.message, codigo: err.code });
                 }
@@ -142,7 +148,7 @@ router.route('/pessoas/:id')
             }
 
             if(err) { 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -168,7 +174,7 @@ router.route('/animais')
             mongoose.disconnect();
 
             if(err) { 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -183,7 +189,7 @@ router.route('/animais')
             mongoose.disconnect();
 
             if(err) { 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -204,7 +210,7 @@ router.route('/animais/:id')
             mongoose.disconnect();
 
             if(err) { 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -225,7 +231,7 @@ router.route('/animais/:id')
             if(err) { 
                 mongoose.disconnect();
 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -250,7 +256,7 @@ router.route('/animais/:id')
                 mongoose.disconnect();
 
                 if(err) { 
-                    console.error(err);
+                    console.log(err);
                 
                     return res.json({ status: 200, mensagem: err.message, codigo: err.code });
                 }
@@ -276,7 +282,7 @@ router.route('/animais/:id')
             }
 
             if(err) { 
-                console.error(err);
+                console.log(err);
                 
                 return res.json({ status: 200, mensagem: err.message, codigo: err.code });
             }
@@ -288,3 +294,5 @@ router.route('/animais/:id')
 app.use('/api', router);
 
 app.listen(nodePort);
+
+console.log('API Node iniciada na porta ' + nodePort + '! Base de dados no endereço ' + hostMongoDB + '...');
