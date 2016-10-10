@@ -1,29 +1,24 @@
 version: '2'
 
 services:
-  mongodb:
+  mongo:
     container_name: mongodb      
     image: mongo
-  mongodb-web:
+  mongo-web:
     container_name: mongodb-web
-    depends_on:
-      - mongodb
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
     image: mongo-express
     links:
-      - mongodb
+      - mongo
     ports:
-      - "9000:8081"
+      - "9000:8081"    
   node-api:  
-    command: nodemon /node-api/server.js
+    command: nodemon
     container_name: node-api    
-    depends_on:
-      - mongodb
     environment:
       - NODE_PORT=9001
     image: node-api:0.1
     links:
-      - mongodb
+      - mongo
     ports:
-      - "9001:9001"      
+      - "9001:9001"
+    working_dir: /node-api
