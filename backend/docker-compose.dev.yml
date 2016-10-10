@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  mongo:
+    container_name: mongodb      
+    image: mongo
+#  mongo-web:
+#    container_name: mongodb-web
+#    image: mongo-express
+#    links:
+#      - mongo
+#    ports:
+#      - "9000:8081"    
+  node-api:  
+    command: nodemon
+    container_name: node-api    
+    environment:
+      - MONGODB_PORT_27017_TCP_ADDR=172.18.0.2
+      - MONGODB_PORT_27017_TCP_PORT=27017
+      - MONGODB_PORT_27017_TCP_DATABASE=gpa
+      - NODE_ENV=development
+    image: node-api:0.1
+    links:
+      - mongo
+    ports:
+      - "9001:9001"
+    volumes:
+      - .:/home/api/api
+      - /home/api/api/node_modules
+    working_dir: /home/api/api

@@ -3,8 +3,9 @@
     "main":         "server.js",
     "dependencies": {
         "express":         "latest",
+        "body-parser":     "latest",
         "cors":            "latest",
-        "mongoose":        "latest",
-        "body-parser":     "latest"
+        "moment-timezone": "latest",
+        "mongoose":        "latest"
     }
 }
