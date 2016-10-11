@@ -2,15 +2,15 @@ FROM node:latest
 
 RUN useradd --user-group --create-home --shell /bin/false api
 
-ENV NODE_API_HOME=/home/api NODE_API_PORT=9001
+ENV USER_API_HOME=/home/api API_PORT=9001
 
-COPY package.json $NODE_API_HOME/api/
+COPY package.json $USER_API_HOME/api/
 
-RUN chown -R api:api $NODE_API_HOME/*
+RUN chown -R api:api $USER_API_HOME/*
 
 User api
 
-WORKDIR $NODE_API_HOME/api
+WORKDIR $USER_API_HOME/api
 
 RUN npm install 
 
@@ -20,6 +20,6 @@ RUN npm install -g nodemon && npm cache clean
 
 COPY . $HOME/api
 
-RUN chown -R api:api $NODE_API_HOME/*
+RUN chown -R api:api $USER_API_HOME/*
 
-EXPOSE $NODE_API_PORT
+EXPOSE $API_PORT

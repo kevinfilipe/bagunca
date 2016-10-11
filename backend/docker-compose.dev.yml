@@ -18,8 +18,8 @@ services:
       - MONGODB_PORT_27017_TCP_ADDR=172.18.0.2
       - MONGODB_PORT_27017_TCP_PORT=27017
       - MONGODB_PORT_27017_TCP_DATABASE=gpa
-      - NODE_ENV=development
-    image: node-api:0.1
+      - MORGAN_ENV=dev
+    image: node-api
     links:
       - mongo
     ports:

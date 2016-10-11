@@ -5,7 +5,8 @@
         "express":         "latest",
         "body-parser":     "latest",
         "cors":            "latest",
-        "moment-timezone": "latest",
+        "express-logger":  "latest",
+        "morgan":          "latest",
         "mongoose":        "latest"
     }
 }
