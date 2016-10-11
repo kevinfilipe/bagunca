@@ -4,13 +4,13 @@ services:
   mongo:
     container_name: mongodb      
     image: mongo
-#  mongo-web:
-#    container_name: mongodb-web
-#    image: mongo-express
-#    links:
-#      - mongo
-#    ports:
-#      - "9000:8081"    
+  mongo-web:
+    container_name: mongodb-web
+    image: mongo-express
+    links:
+      - mongo
+    ports:
+      - "9000:8081"    
   node-api:  
     command: nodemon
     container_name: node-api    
