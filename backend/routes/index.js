@@ -1,0 +1,1 @@
+exports.pessoas = require('./pessoas');
