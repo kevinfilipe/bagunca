@@ -31,7 +31,8 @@ mongooseConnection.once('open', function () {
 
 function schemas (req, res, next) {
   req.schemas = {
-    Pessoa: mongooseConnection.model('Pessoa', modelos.Pessoa, 'pessoas')
+    Pessoa: mongooseConnection.model('Pessoa', modelos.Pessoa, 'pessoas'),
+    Animal: mongooseConnection.model('Animal', modelos.Animal, 'animais')
   };
 
   return next();
@@ -42,6 +43,12 @@ api.get('/api/pessoas/:id', schemas, rotas.pessoas.consultar);
 api.post('/api/pessoas', schemas, rotas.pessoas.adicionar);
 api.put('/api/pessoas/:id', schemas, rotas.pessoas.atualizar);
 api.delete('/api/pessoas/:id', schemas, rotas.pessoas.remover);
+
+api.get('/api/animais', schemas, rotas.animais.consultarTodos);
+api.get('/api/animais/:id', schemas, rotas.animais.consultar);
+api.post('/api/animais', schemas, rotas.animais.adicionar);
+api.put('/api/animais/:id', schemas, rotas.animais.atualizar);
+api.delete('/api/animais/:id', schemas, rotas.animais.remover);
 
 api.get('*', function(req, res){
   res.sendStatus(404);
