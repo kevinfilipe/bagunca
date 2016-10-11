@@ -11,6 +11,10 @@ api.use(bodyParser.json());
 api.use(cors());
 api.use(morgan(process.env.MORGAN_ENV));
 
+app.get('*', function(req, res){
+  res.send(404);
+});
+
 api.listen(apiPort);
 
 console.info('API iniciada na porta ' + apiPort + '.');
