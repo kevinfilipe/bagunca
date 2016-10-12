@@ -18,6 +18,8 @@ services:
     build: .
     command: nodemon
     container_name: node-api    
+    # As tres primeiras variaveis devem ser removidas posteriormente. 
+    # Medida provisoria para resolver problemas de rede.
     environment:
       - MONGODB_PORT_27017_TCP_ADDR=172.18.0.2
       - MONGODB_PORT_27017_TCP_PORT=27017
