@@ -4,6 +4,7 @@ services:
   mongo:
     container_name: mongodb      
     image: mongo
+    # Certificar que esse diretorio existe no host
     volumes:
       - ./dbdata:/data/db
   mongo-web:
@@ -14,6 +15,7 @@ services:
     ports:
       - "9000:8081"    
   node-api:  
+    build: .
     command: nodemon
     container_name: node-api    
     environment:
@@ -21,7 +23,7 @@ services:
       - MONGODB_PORT_27017_TCP_PORT=27017
       - MONGODB_PORT_27017_TCP_DATABASE=gpa
       - MORGAN_ENV=dev
-    image: node-api
+    image: node-api  
     links:
       - mongo
     ports:
